@@ -1,16 +1,23 @@
 require 'rubygems'
 require 'rake'
+require "bundler"
+Bundler.setup
 
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "hayde"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Textile guides generator like rails-guides.}
+    gem.description = %Q{Helper for generating guides articles from textile source. Extracted from railties-3.0.0.beta3 project. }
     gem.email = "ZaharenkovRoman@gmail.com"
     gem.homepage = "http://github.com/Romantic/hayde"
     gem.authors = ["Roman Zaharenkov"]
+    gem.add_dependency('RedCloth', '>= 4.1.1')
+    gem.add_dependency('actionpack', '>= 2.9')
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    
+    gem.files.include %w(lib/hayde/**/*)
+
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -41,6 +48,11 @@ end
 task :test => :check_dependencies
 
 task :default => :test
+
+require 'yard'
+YARD::Rake::YardocTask.new(:yardoc) do |t|
+  t.files = FileList['lib/**/*.rb'].exclude('lib/hayde/templates/**/*.rb')
+end
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|

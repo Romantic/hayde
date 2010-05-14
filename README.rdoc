@@ -1,6 +1,6 @@
 = hayde
 
-Description goes here.
+Hayde is a helper for generating guides articles from textile source. Extracted from railties-3.0.0.beta3 project.
 
 == Note on Patches/Pull Requests
  

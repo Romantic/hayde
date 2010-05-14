@@ -13,7 +13,7 @@ begin
     gem.homepage = "http://github.com/Romantic/hayde"
     gem.authors = ["Roman Zaharenkov"]
     gem.add_dependency('RedCloth', '>= 4.1.1')
-    gem.add_dependency('actionpack', '>= 2.9')
+    gem.add_dependency('actionpack', '= 3.0.0.beta3')
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     
     gem.files.include %w(lib/hayde/**/*)

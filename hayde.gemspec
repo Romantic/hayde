@@ -19,24 +19,25 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "Gemfile",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "hayde.gemspec",
      "lib/hayde.rb",
      "lib/hayde/generator.rb",
      "lib/hayde/helpers.rb",
      "lib/hayde/indexer.rb",
      "lib/hayde/levenshtein.rb",
      "lib/hayde/textile_extensions.rb",
-     "lib/hayde/utils.rb",
      "test/helper.rb",
      "test/test_hayde.rb"
   ]
   s.homepage = %q{http://github.com/Romantic/hayde}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Textile guides generator like rails-guides.}
   s.test_files = [
     "test/helper.rb",
@@ -47,7 +48,7 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<actionpack>, [">= 2.9"])
       s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])

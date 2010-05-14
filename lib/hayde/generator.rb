@@ -43,7 +43,6 @@ require 'action_view'
 require 'hayde/indexer'
 require 'hayde/helpers'
 require 'hayde/levenshtein'
-require 'hayde/utils'
 
 module Hayde
   class Generator    

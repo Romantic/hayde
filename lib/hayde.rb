@@ -25,8 +25,7 @@ rescue Gem::LoadError
 end
 
 require 'hayde/generator'
-require 'rails_guides/textile_extensions'
-
+require 'hayde/textile_extensions'
 
 RedCloth.send(:include, RailsGuides::TextileExtensions)
 

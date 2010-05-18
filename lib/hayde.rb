@@ -27,6 +27,6 @@ end
 require 'hayde/generator'
 require 'hayde/textile_extensions'
 
-RedCloth.send(:include, RailsGuides::TextileExtensions)
+RedCloth.send(:include, Hayde::TextileExtensions)
 
 Dir.glob(File.join(pwd, 'tasks', '*.rb')).each { |task| require task }

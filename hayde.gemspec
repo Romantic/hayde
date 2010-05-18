@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roman Zaharenkov"]
-  s.date = %q{2010-05-14}
+  s.date = %q{2010-05-18}
   s.description = %q{Helper for generating guides articles from textile source. Extracted from railties-3.0.0.beta3 project. }
   s.email = %q{ZaharenkovRoman@gmail.com}
   s.extra_rdoc_files = [
@@ -26,11 +26,13 @@ Gem::Specification.new do |s|
      "VERSION",
      "hayde.gemspec",
      "lib/hayde.rb",
+     "lib/hayde/file_utils.rb",
      "lib/hayde/generator.rb",
      "lib/hayde/helpers.rb",
      "lib/hayde/indexer.rb",
      "lib/hayde/levenshtein.rb",
      "lib/hayde/textile_extensions.rb",
+     "lib/tasks/haydetasks.rb",
      "test/helper.rb",
      "test/test_hayde.rb"
   ]

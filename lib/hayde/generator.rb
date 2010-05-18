@@ -90,7 +90,6 @@ module Hayde
     end
 
     def copy_assets
-      #FileUtils.cp(Dir.glob(File.join(assets_dir, '**', '*')).reject {|file| file !~ /(css|js|png|gif)$/ }, output_dir)
       copy(assets_dir, output_dir, /\.$|\.svn/)
     end
     
@@ -100,8 +99,6 @@ module Hayde
 
           source_file = File.join(source, file)
           destination_file = File.join(destination, file)
-
-          puts "#{source_file} --> #{destination_file}"
           
           if File.directory?(source_file)
             FileUtils.mkdir(destination_file) if !File.directory?(destination_file)

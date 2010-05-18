@@ -24,10 +24,6 @@ rescue Gem::LoadError
   exit 1
 end
 
-module Hayde
-    require 'hayde/textile_extensions'    
-    require 'hayde/generator'
-    
-    RedCloth.send(:include, Hayde::TextileExtensions)
-    #Hayde::Generator.new.generate
-end
+require 'hayde/generator'
+
+Dir.glob(File.join(pwd, 'tasks', '*.rb')).each { |task| require task }

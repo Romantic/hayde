@@ -43,49 +43,42 @@ require 'action_view'
 require 'hayde/indexer'
 require 'hayde/helpers'
 require 'hayde/levenshtein'
+require 'hayde/file_utils'
 
 module Hayde
-  class Generator    
-    # TODO: Move method to utils mudule.
-    def self.filelist_attribute(*names)
-      names.each do |name|
-        define_method "#{name}" do
-          files = instance_variable_get("@#{name}_files")
-          if !files
-            files = FileList.new()
-            instance_variable_set("@#{name}_files", files)
-          end
-          files
-        end
-
-        define_method "#{name}=" do |files|
-          instance_variable_set("@#{name}_files", FileList[files])
-          if files && files.class != FileList
-              files = FileList.new(files)
-          end
-        end
-      end
-    end
+  class Generator
+    include Hayde::Utils::Files
     
-    attr_accessor :output_dir, :assets_dir, :warnings, :edge, :force, :layout    
+    attr_accessor :output_dir, :assets_dir, :warnings, :edge, :force, :layout
     filelist_attribute :sources
 
     GUIDES_RE = /\.(?:textile|html\.erb)$/
 
     def initialize(output = nil)
-      initialize_output_dir(output)
+      set_defaults(output)
       yield self if block_given?
     end
 
     def generate
+      puts "Generating guides has been started."
       generate_guides
+      puts "Copying assets ..."
       copy_assets
+      puts "Generating guides has been finished."
+    end
+    
+    def clean
+      FileUtils.rm_r Dir.glob(File.join(output_dir, '*'))
     end
 
     private
     
-    def initialize_output_dir(output)
-      @output_dir = output || File.join(File.dirname(__FILE__), "docs", "guides")
+    def set_defaults(output)
+      root_dir = Rails.root if defined? Rails
+      root_dir ||= Dir.pwd
+      @layout = 'layout'
+      @assets_dir = File.join(root_dir, 'guides', 'assets')
+      @output_dir = output || File.join(root_dir, 'docs', 'guides')
       FileUtils.mkdir_p(@output_dir)
     end
 
@@ -97,7 +90,7 @@ module Hayde
     end
 
     def copy_assets
-      FileUtils.cp_r(Dir.glob("#{assets_dir}/*"), output_dir)
+      FileUtils.cp_r(Dir.glob(File.join(assets_dir, '*')), output_dir)
     end
 
     def output_file_for(source)
@@ -110,20 +103,20 @@ module Hayde
     end
 
     def generate_guide(source, output)
-      puts "Generating #{output}"
+      puts "Generating #{output} ..."
       File.open(output, 'w') do |f|
         view = ActionView::Base.new(File.dirname(source), :edge => edge)
         view.extend(Helpers)
 
         if source =~ /\.html\.erb$/
           # Generate the special pages like the home.
-          result = view.render(:layout => 'layout', :file => source)
+          result = view.render(:layout => layout, :file => source)
         else
           body = File.read(source)
           body = set_header_section(body, view)
           body = set_index(body, view)
 
-          result = view.render(:layout => 'layout', :text => textile(body))
+          result = view.render(:layout => layout, :text => textile(body))
 
           warn_about_broken_links(result) if warnings
         end
